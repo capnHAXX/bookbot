@@ -1,8 +1,11 @@
+from stats import get_num_words
+import sys
+
 def main():
     book_path = get_path()
     print(f"statistics for {book_path}")
     book_text = read_text(book_path)
-    word_count(book_text)
+    get_num_words(book_text)
     char_count = char_counter(book_text)
     a_list = alpha_dlist(char_count)
     prt_alphalist(a_list)
@@ -10,14 +13,13 @@ def main():
 
 # pulls path to frankenstein
 def get_path():
-    book_path = "books/frankenstein.txt"
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    book_path = sys.argv[1]
     return book_path
 
-# creates list of words in text and prints the count
-def word_count(book_text):
-     book_words = book_text.split()
-     word_count = len(book_words)
-     print(f"Total word count = {word_count}")
+
      
 # reads and returns the entire text   
 def read_text(book_path):
@@ -56,6 +58,6 @@ def prt_alphalist(a_list):
     for d in a_list:
         char = d["character"]
         num = d["num"]
-        print(f"The '{char}' character was found {num} times")
+        print(f"{char}: {num}")
 
 main()
